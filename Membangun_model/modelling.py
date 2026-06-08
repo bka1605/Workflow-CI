@@ -1,7 +1,6 @@
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 import joblib
-import os
 
 # 1. Load data
 X_train = pd.read_csv('Iris_preprocessing/X_train.csv')

@@ -1,29 +1,18 @@
 from flask import Flask, request, jsonify, Response
 import joblib
 import pandas as pd
-from prometheus_client import Counter, generate_latest
+from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
+from prometheus_exporter import REQUEST_COUNT, PREDICTION_COUNT
 
 app = Flask(__name__)
 
 # load model
 model = joblib.load('model.pkl')
 
-# siapin Prometheus
-REQUEST_COUNT = Counter(
-    'app_request_count', 
-    'Total request yang masuk ke aplikasi', 
-    ['method', 'endpoint', 'http_status']
-)
-PREDICTION_COUNT = Counter(
-    'model_prediction_count',
-    'Total hasil prediksi model',
-    ['prediction_result']
-)
-
 # endpoint Prometheus
 @app.route('/metrics')
 def metrics():
-    return Response(generate_latest(), mimetype="text/plain")
+    return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
 
 # endpoint Prediksi
 @app.route('/predict', methods=['POST'])
