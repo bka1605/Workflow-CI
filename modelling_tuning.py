@@ -5,9 +5,11 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 import pandas as pd
 import joblib
+import os
 
 # 1. Koneksi ke DagsHub
-dagshub.init(repo_owner='bka1605', repo_name='Modelling_SML_Brian-Kristanto-A', mlflow=True)
+token = os.getenv('DAGSHUB_TOKEN')  # Pastikan token DagsHub disimpan di environment variable
+dagshub.init(repo_owner='bka1605', repo_name='Modelling_SML_Brian-Kristanto-A', mlflow=True, token=token)
 mlflow.set_tracking_uri("https://dagshub.com/bka1605/Modelling_SML_Brian-Kristanto-A.mlflow")
 
 # 2. Load data hasil preprocessing Kriteria 1
