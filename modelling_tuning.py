@@ -7,7 +7,6 @@ import pandas as pd
 import joblib
 
 # 1. Koneksi ke DagsHub
-dagshub.init(repo_owner='bka1605', repo_name='Modelling_SML_Brian-Kristanto-A', mlflow=True)
 mlflow.set_tracking_uri("https://dagshub.com/bka1605/Modelling_SML_Brian-Kristanto-A.mlflow")
 
 # 2. Load data hasil preprocessing Kriteria 1
