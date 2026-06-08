@@ -1,43 +1,76 @@
 import mlflow
 import mlflow.sklearn
 import dagshub
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score
 import pandas as pd
 import joblib
+import json
+import matplotlib.pyplot as plt
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay, classification_report
+from sklearn.utils import estimator_html_repr
 
-# 1. Koneksi ke DagsHub
+# connect dagshub
 mlflow.set_tracking_uri("https://dagshub.com/bka1605/Modelling_SML_Brian-Kristanto-A.mlflow")
 
-# 2. Load data hasil preprocessing Kriteria 1
-X_train = pd.read_csv('data/X_train.csv')
-y_train = pd.read_csv('data/y_train.csv')
-X_test = pd.read_csv('data/X_test.csv')
-y_test = pd.read_csv('data/y_test.csv')
+# load data
+X_train = pd.read_csv('Iris_preprocessing/X_train.csv')
+y_train = pd.read_csv('Iris_preprocessing/y_train.csv')
+X_test = pd.read_csv('Iris_preprocessing/X_test.csv')
+y_test = pd.read_csv('Iris_preprocessing/y_test.csv')
 
-# 3. Setup MLflow Experiment
+# setup
 mlflow.set_experiment("Iris-Classification-Tuning")
 
-# 4. Training dengan MLflow
+# train mlflow
 with mlflow.start_run():
-    # Hyperparameter
     n_estimators = 100
     max_depth = 5
     
     model = RandomForestClassifier(n_estimators=n_estimators, max_depth=max_depth)
     model.fit(X_train, y_train.values.ravel())
-    
-    # Log ke DagsHub
-    mlflow.log_param("n_estimators", n_estimators)
-    mlflow.log_param("max_depth", max_depth)
-    mlflow.sklearn.log_model(model, "model")
-    
-    print("Model berhasil dilatih dan dikirim ke DagsHub!")
-    
-    # Tambahkan ini di dalam blok 'with mlflow.start_run():'
     predictions = model.predict(X_test)
     accuracy = accuracy_score(y_test, predictions)
-
-    # Log metrik ke DagsHub
+    
+    # log param & metric
+    mlflow.log_param("n_estimators", n_estimators)
+    mlflow.log_param("max_depth", max_depth)
     mlflow.log_metric("accuracy", accuracy)
+    
+    mlflow.sklearn.log_model(model, "model")
+    
+    # buat estimator.html
+    with open("estimator.html", "w") as f:
+        f.write(estimator_html_repr(model))
+    mlflow.log_artifact("estimator.html")
+    
+    # metric info json
+    with open("metric_info.json", "w") as f:
+        json.dump({"accuracy": accuracy}, f)
+    mlflow.log_artifact("metric_info.json")
+    
+    # gmbr train confus matrix
+    cm = confusion_matrix(y_test, predictions)
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm)
+    fig, ax = plt.subplots()
+    disp.plot(ax=ax)
+    plt.title("Confusion Matrix")
+    plt.savefig("training_confusion_matrix.png")
+    mlflow.log_artifact("training_confusion_matrix.png")
+    
+    # classification report
+    report = classification_report(y_test, predictions)
+    with open("classification_report.txt", "w") as f:
+        f.write(report)
+    mlflow.log_artifact("classification_report.txt")
+    
+    # feature importance
+    importances = model.feature_importances_
+    fig2, ax2 = plt.subplots()
+    ax2.barh(X_train.columns, importances)
+    ax2.set_title("Feature Importances")
+    plt.savefig("feature_importances.png")
+    mlflow.log_artifact("feature_importances.png")
+
     print(f"Accuracy: {accuracy}")
+    print("Model dan artefak selesai dikirim ke DagsHub")
+    
