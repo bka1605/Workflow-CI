@@ -22,7 +22,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd Membangun_model
           pip install -r requirements.txt
 
       - name: Run mlflow project
