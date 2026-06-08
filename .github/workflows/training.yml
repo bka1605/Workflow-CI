@@ -22,6 +22,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          cd "Membangun_model"
           pip install -r requirements.txt
 
       - name: Run mlflow project
@@ -54,7 +55,7 @@ jobs:
       - name: Build Docker Model
         run: |
           ls -R
-          cd "./Monitoring dan Logging"
+          cd "Monitoring dan Logging"
           docker build -t ${{ secrets.DOCKER_USERNAME }}/iris-api:latest .
 
       - name: Tag Docker Image
