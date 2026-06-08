@@ -42,7 +42,7 @@ jobs:
 
       # Catatan di gambar menyebutkan "Sesuaikan dengan metode penyimpanan yang Anda pilih"
       - name: Upload to GitHub
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: hasil-artefak-model
           path: Membangun_model/
