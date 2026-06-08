@@ -36,6 +36,7 @@ with mlflow.start_run():
     mlflow.log_param("max_depth", max_depth)
     mlflow.log_metric("accuracy", accuracy)
     
+    # log model
     mlflow.sklearn.log_model(model, "model")
     
     # buat estimator.html
