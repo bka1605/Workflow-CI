@@ -64,7 +64,6 @@ jobs:
 
       - name: Build Docker Model
         run: |
-          MODEL_PATH = $(find MLProject/mlruns/0/$RUN_ID/artifacts/model -type d -name 'model' | head -n 1 | grep "$RUN_ID")
           mlflow models build-docker --model-uri "runs:/${{ env.RUN_ID }}/model" --name "mobile_price_cls-api"
 
       - name: Tag Docker Image
