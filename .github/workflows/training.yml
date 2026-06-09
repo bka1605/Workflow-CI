@@ -63,6 +63,8 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker Model
+        env:
+          MLFLOW_TRACKING_URI: file:///${{ github.workspace }}/MLProject
         run: |
           mlflow models build-docker --model-uri "runs:/${{ env.RUN_ID }}/model" --name "mobile_price_cls-api"
 
