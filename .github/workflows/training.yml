@@ -39,9 +39,9 @@ jobs:
           
       - name: Get latest MLflow run_id
         run: |
-          RUN_ID=$(ls -td MLProject/mlruns/0/* | head -n 1 | cut -d'/' -f3)
-          echo "Latest MLflow run_id: $RUN_ID"
+          RUN_ID=$(ls -td MLProject/mlruns/0/* | head -n 1 | xargs basename)
           echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
+          echo "Latest MLflow run_id: $RUN_ID"
 
       - name: Install Python dependencies
         run: echo "Dependencies sudah terinstall di tahap sebelumnya"
@@ -65,7 +65,7 @@ jobs:
       - name: Build Docker Model
         run: |
           MODEL_PATH = $(find MLProject/mlruns/0/$RUN_ID/artifacts/model -type d -name 'model' | head -n 1 | grep "$RUN_ID")
-          mlflow models build-docker --model-uri "runs:/$RUN_ID/model" --name "mobile_price_cls-api"
+          mlflow models build-docker --model-uri "runs:/${{ env.RUN_ID }}/model" --name "mobile_price_cls-api"
 
       - name: Tag Docker Image
         run: |
