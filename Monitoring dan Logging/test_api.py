@@ -27,7 +27,7 @@ data_input = {
 }
 
 print("Mengirim dummy utk predict")
-response = requests.post(url, json=data_input)
-
-print("Status Code:", response.status_code)
-print("Hasil Prediksi:", response.json())
+for i in range(25):
+    response = requests.post(url, json=data_input)
+    print(f"Request ke-{i+1} - Status Code: {response.status_code})")
+    print(f"Hasil Prediksi: {response.json()}")
