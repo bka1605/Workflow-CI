@@ -3,6 +3,8 @@ version: '3.8'
 services:
   api:
     build: .
+    container_name: mobile_price_cls-api
+    image: mobile_price_cls-api
     ports:
       - "5000:5000"
 
