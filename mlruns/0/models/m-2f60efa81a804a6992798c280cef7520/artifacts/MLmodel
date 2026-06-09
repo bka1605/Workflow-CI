@@ -1,0 +1,43 @@
+artifact_path: /home/runner/work/Workflow-CI/Workflow-CI/mlruns/0/models/m-2f60efa81a804a6992798c280cef7520/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.7
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.9.0
+    skops_trusted_types: null
+is_signature_from_type_hint: false
+mlflow_version: 3.13.0
+model_id: m-2f60efa81a804a6992798c280cef7520
+model_size_bytes: 585834
+model_uuid: m-2f60efa81a804a6992798c280cef7520
+prompts: null
+run_id: b4518b12d0f945b0b184a0cf9cfaa404
+signature:
+  inputs: '[{"type": "double", "name": "battery_power", "required": true}, {"type":
+    "double", "name": "blue", "required": true}, {"type": "double", "name": "clock_speed",
+    "required": true}, {"type": "double", "name": "dual_sim", "required": true}, {"type":
+    "double", "name": "fc", "required": true}, {"type": "double", "name": "four_g",
+    "required": true}, {"type": "double", "name": "int_memory", "required": true},
+    {"type": "double", "name": "m_dep", "required": true}, {"type": "double", "name":
+    "mobile_wt", "required": true}, {"type": "double", "name": "n_cores", "required":
+    true}, {"type": "double", "name": "pc", "required": true}, {"type": "double",
+    "name": "px_height", "required": true}, {"type": "double", "name": "px_width",
+    "required": true}, {"type": "double", "name": "ram", "required": true}, {"type":
+    "double", "name": "sc_h", "required": true}, {"type": "double", "name": "sc_w",
+    "required": true}, {"type": "double", "name": "talk_time", "required": true},
+    {"type": "double", "name": "three_g", "required": true}, {"type": "double", "name":
+    "touch_screen", "required": true}, {"type": "double", "name": "wifi", "required":
+    true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2026-06-09 04:10:44.756573'
