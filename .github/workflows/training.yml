@@ -64,6 +64,7 @@ jobs:
 
       - name: Build Docker Model
         env:
+          MLFLOW_ALLOW_FILE_STORE: "true"
           MLFLOW_TRACKING_URI: file:///${{ github.workspace }}/MLProject
         run: |
           mlflow models build-docker --model-uri "runs:/${{ env.RUN_ID }}/model" --name "mobile_price_cls-api"
