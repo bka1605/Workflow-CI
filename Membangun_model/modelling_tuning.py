@@ -13,13 +13,13 @@ from sklearn.utils import estimator_html_repr
 mlflow.set_tracking_uri("https://dagshub.com/bka1605/Modelling_SML_Brian-Kristanto-A.mlflow")
 
 # load data
-X_train = pd.read_csv('Iris_preprocessing/X_train.csv')
-y_train = pd.read_csv('Iris_preprocessing/y_train.csv')
-X_test = pd.read_csv('Iris_preprocessing/X_test.csv')
-y_test = pd.read_csv('Iris_preprocessing/y_test.csv')
+X_train = pd.read_csv('mobile_price_cls_preprocessing/X_train.csv')
+y_train = pd.read_csv('mobile_price_cls_preprocessing/y_train.csv')
+X_test = pd.read_csv('mobile_price_cls_preprocessing/X_test.csv')
+y_test = pd.read_csv('mobile_price_cls_preprocessing/y_test.csv')
 
 # setup
-mlflow.set_experiment("Iris-Classification-Tuning")
+mlflow.set_experiment("Mobile-Price-Classification-Tuning")
 
 # train mlflow
 with mlflow.start_run():
